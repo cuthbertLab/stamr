@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns = "http://www.w3.org/1999/xhtml">
+<head>
+ <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <script data-main="../src/music21.js" src="../ext/require/require.js"></script>
+
+</head>
+<body>
+<script type="text/javascript">
+
+
+function playNote(midiNum) {
+    MIDI.noteOn(0, midiNum, 100, 0);
+    MIDI.noteOff(0, midiNum, .35);
+
+}
+
+var stopIntervalId;
+var numPlays = 0;
+var playedNote = 70;
+
+playSeventy = function () {
+    playNote(playedNote + numPlays);
+    numPlays += 1;
+    if (numPlays >= 30) {
+       numPlays = 0;
+       MIDI.noteOff(0, playedNote + numPlays, .1);
+       clearInterval(stopIntervalId);
+    }
+}
+
+function refreshMe() {
+    stopIntervalId = setInterval(playSeventy, 100);
+}
+
+function drawMe() {
+	var myNote = new music21.note.Rest(4.0);
+    var myStream = new music21.stream.Stream();
+    myStream.append(myNote);
+	myStream.appendNewCanvas();
+}
+
+function renderIt() {
+    var valueur = document.getElementById("textId").value;
+    var notes = valueur.split(" ");
+    var newStream = new music21.stream.Stream();
+    for (var i = 0; i < notes.length; i++) {
+       var noteContent = notes[i].split("_");
+       var noteName = noteContent[0];
+       var noteValue = parseFloat(noteContent[1]);
+       var newNote = new music21.note.Note(noteName, noteValue);
+       newStream.append(newNote);
+    }
+    newStream.replaceCanvas();
+}
+
+require(['music21'], drawMe);
+
+</script>
+</body>
+This was the oldest/first experiment with music21j, from summer 2013.  Updated so it still works.<br/>
+Only for historical nostalgia...
+<input type="button" onclick="playNote(60)" value="clickMe" />
+<input type="button" onclick="refreshMe()" value="playSeventy" /><br />
+<input type="text" value="E_2 F_1.5 G_.5 E_2" id="textId" onchange="renderIt()"/>
+</html>
