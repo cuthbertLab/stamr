@@ -6,55 +6,60 @@
 	<link rel="stylesheet" href="css/smarty/scripts/nivo-slider/default/default.css" type="text/css" media="screen">
 	<link rel="stylesheet" href="css/smarty/scripts/nivo-slider/default/nivo-slider.css" type="text/css" media="screen">
 	<link rel="stylesheet" href="css/smarty/css/style.css" type="text/css" media="screen">
-    <script data-main="atlasMain" src="http://web.mit.edu/music21/music21j/ext/require/require.js"></script>
+    <script data-main="atlasMain" src="https://www.artusi.xyz/music21j/ext/require/require.js"></script>
     <script src="atlasMain.js"></script>
+	<style>
+	h3 {
+		padding-bottom: 20px;
+	}
+	</style>
 	<title>
-	Atlas: Mapping Supplemental Polyphony in Late-Medieval Europe (built on EMMSAP)
+	Search EMMSAP via STAMR
 	</title>
 </head>
 <body>
 <header class="clearfix">
   <div class="container">
     <div id="logo" class="span-2"><img src="css/atlas_logo.png" alt=""></div>
-    <h1 class="span-10">Atlas<span>Mapping Supplemental Polyphony in Late-Medieval Europe<br>(based on EMMSAP)</span></h1>
+    <h1 class="span-10">STAMR<span>Searching Medieval Polyphony<br>(based on EMMSAP)</span></h1>
     <nav class="span-12 last">
       <ul class="right">
         <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Works</a></li>
-        <li><a href="#">Reworking</a></li>
-        <li><a href="#">Search</a></li>
-        <li><a href="#">About</a></li>
+        <li><a href="#" class="clickPopup" refId='aboutEmmsap'>EMMSAP</a></li>
+        <li><a href="#" class="clickPopup" refId='aboutStamr'>STAMR</a></li>
+        <li><a href="#" class="clickPopup" refId='aboutSeaver'>cuthbertLab</a></li>
       </ul>
     </nav>
   </div>
 </header>
-<!-- 
+<!--
 <section id="slider_wrapper" class="slider-wrapper theme-default container">
-  <div id="slider" class="nivoSlider" style="box-shadow:none;"> 
-    <img src="images/img1.jpg" data-thumb="images/img1.jpg" alt=""> 
-    <img src="images/img1.jpg" data-thumb="images/img1.jpg" alt=""> 
-    <img src="images/img1.jpg" data-thumb="images/img1.jpg" alt=""> 
+  <div id="slider" class="nivoSlider" style="box-shadow:none;">
+    <img src="images/img1.jpg" data-thumb="images/img1.jpg" alt="">
+    <img src="images/img1.jpg" data-thumb="images/img1.jpg" alt="">
+    <img src="images/img1.jpg" data-thumb="images/img1.jpg" alt="">
   </div>
 </section>
  -->
- 
+
 <div id="calltoaction" class="container clearfix">
   <div class="span-17">
-    <p>Search EMMSAP/Atlas for a particular piece<span>See the 
-        <a href="#" id='tinyNotationReference'>TinyNotation Reference</a> for details</span>
+    <p>Search EMMSAP/STAMR for a particular piece<span>See the
+        <a href="#" id='tinyNotationReference' class='clickPopup' refid='tnRef'>TinyNotation Reference</a> for details</span>
     </p>
     <div class="span-14 footerLike"><input type="text" name="email" class="span-12" id='mainSearch' value="d4 c8 d f e"/></div>
     <div class="span-14" id='mainSearchCanvasContainer'><canvas></canvas></div>
-    <div class='span-14' id='mainSearchResultsContainer' style='font-size: 13px'></div>
+	<hr />
+    <div class='span-14' id='mainSearchResultsContainer' style='font-size: 13px'>Click Search to find results</div>
   </div>
   <div class="btn span-6 last right ">
     <a id='searchButton' href="#">Search</a>
     <input type='checkbox' id='octaveEquivalent' name='octaveEquivalent' /><label style='font-size: 18px'>Ignore Octave</label><br/>
-    <input type='checkbox' id='modalTransposition' name='modalTransposition' /><label style='font-size: 18px'>Modal Transp.</label>    
+    <input type='checkbox' id='modalTransposition' name='modalTransposition' /><label style='font-size: 18px'>Modal Transp.</label>
   </div>
 </div>
 <div class="separator"></div>
-<!-- 
+<!--
 <section id="four_columns">
   <div class="container"> <a href="#">
     <div class="span-6">
@@ -85,65 +90,78 @@
  -->
 <div class="separator"></div>
 <section id="recentworks" class="container clearfix">
-  <h2><span>Working with EMMSAP/Atlas</span></h2>
-  <div class="span-6">
-    <div class="image_wrapper"> <img src="css/smarty/images/smarty.jpg" alt=""></div>
-    <p>Atlas of Supplemental Polyphony from 1300-1420: Database</p>
-    <a href="#" class="button">Consult</a> </div>
-  <div class="span-6">
+  <h2><span>About the STAMR/EMMSAP Search</span></h2>
+  <div class="span-6" style='height: 300px'>
+    <div class="image_wrapper"> <img src="button_search.png" alt="search"></div>
+	<a href="#" class="button clickPopup" refId='tnRef'>Tiny Notation</a>
+    <p>About the TinyNotation syntax</p>
+	 </div>
+  <div class="span-6" style='height: 300px'>
     <div class="span-6">
-      <div class="image_wrapper"> <img src="css/smarty/images/smarty.jpg" alt=""></div>
-      <p>Reduction searches, through EMMSAP</p>
-      <a href="#" class="button">Read More</a> </div>
+      <div class="image_wrapper"> <img src="button_emmsap.png" alt="emmsap"></div>
+	  <a href="#" class="button clickPopup" refId='aboutEmmsap'>EMMSAP</a>
+      <p>Based on the EMMSAP database</p>
+	   </div>
   </div>
-  <div class="span-6">
+  <div class="span-6" style='height: 300px'>
     <div class="span-6">
-      <div class="image_wrapper"> <img src="css/smarty/images/smarty.jpg" alt=""></div>
-      <p>cerar una puerta set del amet puido cerar una puerta vset del amet </p>
-      <a href="#" class="button">Read More</a> </div>
+      <div class="image_wrapper"> <img src="button_stamr.png" alt="stamr"></div>
+	  <a href="#" class="button clickPopup" refId='aboutStamr'>STAMR</a>
+      <p>Built on the Small Tools for Agile Music Research framework</p>
+	   </div>
   </div>
-  <div class="span-6 last">
+  <div class="span-6 last" style='height: 300px'>
     <div class="span-6">
-      <div class="image_wrapper"> <img src="css/smarty/images/smarty.jpg" alt=""></div>
-      <p>cerar una puerta set del amet puido cerar una puerta vset del amet </p>
-      <a href="#" class="button">Read More</a> </div>
+      <div class="image_wrapper"> <img src="button_mit.png" alt="MIT"></div>
+	  <a href="#" class="button clickPopup" refId='aboutSeaver'>cuthbertLab</a>
+      <p>Produced by cuthbertLab at MIT through the Seaver Institute</p>
+	   </div>
   </div>
 </section>
 <footer class="clearfix">
   <div class="container">
-    <div class="about span-8 append-1">
+    <div class="about span-8 append-1" id='aboutEmmsap'>
       <h3>About EMMSAP</h3>
-      <p>The Electronic Medieval Music Score Archive Project (EMMSAP) is a project developed by
+      <p style='text-align: left'>The Electronic Medieval Music Score Archive Project (EMMSAP) is a project developed by
       <a href="http://www.trecento.com/">Michael Scott Cuthbert</a> with Anna Grau and others to
       encode all polyphonic European music composed between 1300 and 1430 and, using tools from
-      <a href="http://web.mit.edu/music21/">music21</a> and music21j, to make this repertory
-      searchable and able to be manipulated.
+      <a href="http://web.mit.edu/music21/">music21</a> and STAMR, to make this repertory
+      searchable and able to be manipulated.  This search engine uses tools from an early "Atlas"
+	  prototype (announced at the Schola Cantorum Basilensis) together with the STAMR framework.
       </p>
-      <p class="social_icons">Follow us on :<a href="#"><img src="css/smarty/images/tweeter.png" alt=""></a> <a href="#"><img src="css/smarty/images/facebook.png" alt=""></a> <a href="#"><img src="css/smarty/images/gplus.png" alt=""></a> </p>
+      <!-- <p class="social_icons">Follow us on :<a href="#"><img src="css/smarty/images/tweeter.png" alt=""></a> <a href="#"><img src="css/smarty/images/facebook.png" alt=""></a> <a href="#"><img src="css/smarty/images/gplus.png" alt=""></a> </p> -->
     </div>
-    <div class="about span-6 append-1">
-      <h3>About Atlas</h3>
-      <p>"Atlas: Mapping Supplemental Polyphony in Late-Medieval Europe" is a collaborative project
-      between Pedro Memelsdorff and Michael Scott Cuthbert to identify, describe, and work with
-      all forms of polyphonic changes that result in substantial changes in harmony during the
-      period covered by EMMSAP.
-      </p>        
+    <div class="about span-6 append-1" id='aboutStamr'>
+      <h3>About STAMR</h3>
+      <p style='text-align: left'>"Small Tools for Agile Music Research" is a project
+      run at MIT by Michael Scott Cuthbert with support from the Seaver Institute.
+	  It attempts to make the development of music research tools faster by
+	  producing a reusable framework on which to build research tools that can
+	  be adapted quickly to support changing research needs.  Uses j2p2j for most
+	  purposes.
+      </p>
     </div>
-    <div id="tweets" class="span-6 append-1">
-      <h3>Latest news</h3>
-      <div class="one_tweet">
-        <p>Atlas is announced at the Basel Reworkings conference.</p>
-        <a href="http://www.scb-basel.ch/am_download.php?assetId=124830">Conference Program</a>
-        <div class="date">22 November 2014</div>
-      </div>
+    <div id="aboutSeaver" class="span-6 append-1">
+      <h3>cuthbertLab and the Seaver Institute</h3>
+	  <p style='text-align: left'>
+ 	  cuthbertLab is a research lab on computational musicology, medieval music, and
+	  the digital humanities run by Michael Scott Cuthbert at MIT.  It is most well
+	  known for the creation of the <tt>music21</tt> toolkit for computational music research.
+  </p>
+  	<p style='text-align: left'>
+	  The Seaver Institute, located in Los Angeles, provides seed money to highly regarded
+	  organizations, including MIT, for particular projects which offer the potential for significant
+	  advancement in their fields.  They have supported the creation of STAMR and music21.
+	  </p>
     </div>
     <hr>
-    Copyright 2014 by <b>Michael Scott Cuthbert</b>, all rights reserved <span class="right last">Design uses elements from <a href="http://www.ws-templates.com">ws-templates</a></span></div>
+    Copyright 2017 by <b>Michael Scott Cuthbert</b>, all rights reserved <span class="right last">Design uses elements from <a href="http://www.ws-templates.com">ws-templates</a></span></div>
 </footer>
 <div id='tnRef' style='display: none'>
+<h3>Tiny Notation Reference</h3>
 <ol style='text-align: left'>
 <li>Note names are: a,b,c,d,e,f,g and r for rest
-<li>Flats, sharps, and naturals are notated as #,- (not b), and (if needed) n.  
+<li>Flats, sharps, and naturals are notated as #,- (not b), and (if needed) n.
 <li>Note octaves are specified as follows::
 <ul>
 <li>     CC to BB = from C below bass clef to second-line B in bass clef
@@ -151,14 +169,14 @@
 <li>     c  to b = from middle C to the middle of treble clef
 <li>     c' to b' = from C in treble clef to B above treble clef
 </ul>
-<li> After the note name, a number may be placed indicating the note 
-   length: 1 = whole note, 2 = half, 4 = quarter, 8 = eighth, 16 = sixteenth.  
-   etc.  If the number is omitted then it is assumed to be the same 
+<li> After the note name, a number may be placed indicating the note
+   length: 1 = whole note, 2 = half, 4 = quarter, 8 = eighth, 16 = sixteenth.
+   etc.  If the number is omitted then it is assumed to be the same
    as the previous note.  I.e., c8 B c d  is a string of eighth notes.
-<li> After the number, a ~ can be placed to show a tie to the next note.  
+<li> After the number, a ~ can be placed to show a tie to the next note.
    A "." indicates a dotted note.
-<li> For triplets use this notation: "trip{c4 d8}" indicating that these 
-   two notes both have "3s" over them.  For 4 in the place of 3, 
+<li> For triplets use this notation: "trip{c4 d8}" indicating that these
+   two notes both have "3s" over them.  For 4 in the place of 3,
    use "quad{c16 d e8}".  No other tuplets are supported.
 </ol>
 </div>

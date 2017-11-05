@@ -8,7 +8,7 @@ require.config({
     packages: [
         {
             name: 'music21',
-            location: 'https://www.artusi.xyz/music21j/src/', // default 'packagename'
+            location: '/music21j/src', // default 'packagename'
             main: 'music21', // default 'main'
         },
     ],
@@ -27,16 +27,27 @@ require(['music21', 'feedback'], function() {
         }
     };
 
-    var lastSearch = undefined;
+    let lastSearch = undefined;
+    let lastOctave = undefined;
+    let lastModal = undefined;
     var handleTNSearch = function() {
         var searchValue = $('#mainSearch').val();
-        if (searchValue == lastSearch) {
+        var octaveEquiv = $('#octaveEquivalent')[0].checked;
+        var modal = $('#modalTransposition')[0].checked;
+
+        if (
+            searchValue == lastSearch &&
+            octaveEquiv == lastOctave &&
+            modal == lastModal
+        ) {
             return;
         } else {
             lastSearch = searchValue;
+            lastOctave = octaveEquiv;
+            lastModal = modal;
         }
-        var octaveEquiv = $('#octaveEquivalent')[0].checked;
-        var modal = $('#modalTransposition')[0].checked;
+        var $msr = $('#mainSearchResultsContainer');
+        $msr.html('<p>Searching...</p>');
 
         makeAjax(
             {
@@ -49,14 +60,27 @@ require(['music21', 'feedback'], function() {
                     var $msr = $('#mainSearchResultsContainer');
                     $msr.empty();
                     var maxToShow = 20;
+                    if (jsonData.length === 0) {
+                        $msr.append($('<p>No results.</p>'));
+                    }
+
                     for (var i = 0; i < jsonData.length; i++) {
                         var pi = jsonData[i];
+                        console.log(pi);
                         var piece = pi.fn;
                         piece = piece.replace('.xml', '');
                         piece = piece.replace('.mxl', '');
                         piece = piece.replace('_', ' ');
                         var partId = pi.partId;
                         var context = pi.context;
+                        if (i == maxToShow) {
+                            $msr.append(
+                                $(
+                                    '<p>Too many results. Displaying filenames only...</p>',
+                                ),
+                            );
+                        }
+
                         var $hold = $(
                             '<div>' +
                                 piece +
@@ -128,7 +152,9 @@ require(['music21', 'feedback'], function() {
         .on('change', handleTNSearch);
     $('#searchButton').on('click', handleTNSearch);
     handleTNNotation();
-    $('#tinyNotationReference').on('click', function() {
-        feedback.overlay($('#tnRef').html());
+    $('.clickPopup').on('click', e => {
+        const $target = $(e.target);
+        const refId = $target.attr('refId');
+        feedback.overlay($('#' + refId).html());
     });
 });

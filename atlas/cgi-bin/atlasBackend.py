@@ -22,7 +22,7 @@ class Main(object):
         self.jsonForm = None
         self.useJsonP = False
         self.parseForm()
-        
+
     def parseForm(self):
         if self.form is None:
             return
@@ -32,11 +32,11 @@ class Main(object):
         self.jsonForm = json.loads(jsonString)
         if 'jsonp' in self.form:
             self.useJsonP = True
-            self.jsonPCallFunction = self.form.getfirst('jsonp')        
+            self.jsonPCallFunction = self.form.getfirst('jsonp')
         elif 'callback' in self.form:
             self.useJsonP = True
-            self.jsonPCallFunction = self.form.getfirst('callback') 
-            
+            self.jsonPCallFunction = self.form.getfirst('callback')
+
         return self.jsonForm
 
     def err(self, msg=""):
@@ -49,7 +49,7 @@ class Main(object):
             ct = 'text/json'
         print("Content-Type: " + ct)
         print("")
-                
+
     def jsonReply(self, pyObj):
         self.printJsonHeader()
         jsonString = json.dumps(pyObj)
@@ -67,37 +67,42 @@ class Main(object):
             octaveEquivalent = self.jsonForm['octaveEquivalent']
         else:
             octaveEquivalent = False
-        
+
         if 'modalTransposition' in self.jsonForm:
             modalTransposition = self.jsonForm['modalTransposition']
         else:
             modalTransposition = False
-            
+
         if octaveEquivalent is True or modalTransposition is True:
             binarySearch = ''
         else:
             binarySearch = 'BINARY'
         self.err(binarySearch)
-        
+
         s = music21.converter.parse('tinyNotation: ' + tnPre)
-        
+
         if modalTransposition is not True:
-            outRows = self.getMatchingRows(s, binarySearch)                    
+            outRows = self.getMatchingRows(s, binarySearch)
         else:
             outRows = []
             for genericInterval in range(1, 8):
                 sTransposed = s.transpose(music21.interval.GenericInterval(genericInterval))
                 newRows = self.getMatchingRows(sTransposed, binarySearch)
                 outRows = outRows + newRows
-        
+
         self.jsonReply(outRows)
-    
+
     def getMatchingRows(self, s, binarySearch):
         outRows = []
         excerptNumNotes = len(s.flat.notes)
         tn = toTinyNotation.convert(s.flat.notesAndRests) # regularize
         # BINARY below forces case sensistive...
-        self.em.cursor.execute('SELECT fn, partId, tsRatio, tn FROM tinyNotation WHERE tn LIKE ' + binarySearch + ' "%' + tn + '%"')
+        try:
+            self.em.cursor.execute('SELECT fn, partId, tsRatio, tn FROM tinyNotation WHERE tn LIKE '
+                + binarySearch + ' "%' + tn + '%"')
+        except Exception as e:
+            self.err(e)
+            return
         rows = self.em.cursor.fetchall()
         for r in rows:
             j = {}
@@ -124,5 +129,5 @@ class Main(object):
             j['excerptNoteEnd'] = excerptNoteStart + excerptNumNotes
             j['context'] = context
             outRows.append(j)
-        
+
         return outRows
