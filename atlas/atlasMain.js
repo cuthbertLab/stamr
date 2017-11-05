@@ -8,7 +8,7 @@ require.config({
     packages: [
         {
             name: 'music21',
-            location: '/m21j/src', // default 'packagename'
+            location: '/music21j/src', // default 'packagename'
             main: 'music21', // default 'main'
         },
     ],
