@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Simple Application</title>
+    <script src="/static/vexflow-min.js"></script>
+    {% whitespace all %}
+    {% raw j2p2jHead %}
+    <style>
+    #drop-zone {
+      width:200px;
+      height:200px;
+      border: 2px dashed gray;
+    }
+
+    #drop-zone.active {
+      border: 2px dashed red;
+    }
+    </style>
+</head>
+<body>
+    <input value="G4" type="text" />
+    <input value="A4" type="text" />
+    <input value="B4" type="text" />
+    <input value="C4" type="text" />
+    <input value="G4" type="text" />
+    <br>
+    <form>
+        <div id="drop-zone">
+        </div>
+    </form>
+
+    <button id='key_up'>Key Up</button>    <button id='key_down'>Key Down</button>
+    <div id="boo"></div>
+    <script>
+const noteLengths = ['/q', '/8', '/8', '/q', '/q'];
+
+const dropZone = document.getElementById('drop-zone')
+dropZone.addEventListener("drop", function(e) {
+    // prevent browser default behavior on drop
+    e.preventDefault();
+
+    // iterate over the files dragged on to the browser
+    for (var x = 0; x < e.dataTransfer.files.length; x++) {
+        const file = e.dataTransfer.files[x];
+        // instantiate a new FileReader object
+        var fr = new FileReader();
+
+        // loading files from the file system is an asynchronous
+        // operation, run this function when the loading process
+        // is complete
+        fr.addEventListener("loadend", function() {
+            // send the file over web sockets
+            const frResult = fr.result;
+            console.log(fr.result);
+            j2p2jInstance.send('receive_file', frResult);
+        });
+
+        // load the file into an array buffer
+        fr.readAsArrayBuffer(file);
+    }
+});
+dropZone.addEventListener("dragenter", function(e) {
+    this.classList.add("active");
+});
+
+dropZone.addEventListener("dragleave", function(e) {
+    this.classList.remove("active");
+});
+
+dropZone.addEventListener("dragover", function(e) {
+    e.preventDefault();
+});
+
+function drawScore() {
+    const notes = [...document.querySelectorAll('input')].map(
+        input => input.value,
+    );
+    for (let i = 0; i < notes.length; i++) {
+        notes[i] = notes[i] + noteLengths[i];
+    }
+    const notesStr = notes.join(', ');
+    const vf = new Vex.Flow.Factory({renderer: {selector: 'boo'}});
+    const score = vf.EasyScore();
+    const system = vf.System();
+    system
+        .addStave({
+            voices: [score.voice(score.notes(notesStr))],
+        })
+        .addClef('treble')
+        .addTimeSignature('4/4');
+    vf.draw();
+}
+document.querySelectorAll('input').forEach(el => {
+    ['change', 'input'].forEach(event => {
+        el.addEventListener(event, () => {
+            document.getElementById('boo').innerHTML = '';
+            drawScore();
+        });
+    });
+});
+drawScore();
+</script>
+</body>
+</html>
