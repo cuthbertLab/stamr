@@ -8,7 +8,7 @@
     "src/music21/*.js"
   ],
   "dependencies": {
-    "jquery": "^3.1.0"
+    "jquery": "^3.4.1"
   },
   "devDependencies": {
     "babel": "^6.23.0",
@@ -40,16 +40,13 @@
     "grunt-eslint": "^19.0.0",
     "grunt-git": "^1.0.6",
     "grunt-jsdoc": "^2.1.0",
-    "grunt-release": "^0.14.0",
     "grunt-rollup": "^0.8.0",
     "js-doc": "^0.5.0",
     "jsdoc": "^3.5.4",
-    "npm-check-updates": "^2.12.1",
-    "qunit": "^0.9.1",
+    "npm-check-updates": "^3.1.20",
+    "qunit": "^2.9.2",
     "rollup": "^0.34.13",
     "rollup-plugin-babel": "^2.6.1",
-    "uglify": "^0.1.5",
-    "update": "^0.7.4",
     "webpack": "^2.7.0"
   },
   "directories": {
