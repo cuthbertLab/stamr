@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+m21j/.package-lock.json
+
 # C extensions
 *.so
 
